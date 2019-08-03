@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const usersRouter = require('./routes/users');
 const jobsRouter = require('./routes/jobs');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRouter);
 app.use('/api/jobs', jobsRouter);
+app.use('/api/auth', authRouter);
 
 /* Passport Setup */
 

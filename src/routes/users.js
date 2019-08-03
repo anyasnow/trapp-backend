@@ -10,7 +10,7 @@ usersRouter.get('/', (req, res, next) => {
     .catch(next);
 });
 
-usersRouter.post('/', jsonBodyParser, (req, res, next) => {
+usersRouter.post('/signup', jsonBodyParser, (req, res, next) => {
   const { username, password, email } = req.body;
   for (const field of ['username', 'password', 'email']) {
     if (!req.body[field]) {
