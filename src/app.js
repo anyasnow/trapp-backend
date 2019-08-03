@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const usersRouter = require('./routes/users');
-const jobsRouter = require('./jobs/jobs-router');
+const jobsRouter = require('./routes/jobs');
 
 const app = express();
 
@@ -16,11 +16,11 @@ app.use(cors());
 app.use(helmet());
 
 app.get('/', (req, res) => {
-  res.send('Hello, world!')
-})
+  res.send('Hello, world!');
+});
 
 app.use('/api/users', usersRouter);
-// app.use('/api/jobs', jobsRouter);
+app.use('/api/jobs', jobsRouter);
 
 /* Passport Setup */
 
@@ -28,8 +28,8 @@ const passport = require('passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/success', (req, res) => res.send("You have successfully logged in"));
-app.get('/error', (req, res) => res.send("error logging in"));
+app.get('/success', (req, res) => res.send('You have successfully logged in'));
+app.get('/error', (req, res) => res.send('error logging in'));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -109,7 +109,7 @@ passport.deserializeUser(function(obj, cb) {
 // app.get('/auth/twitter',
 //   passport.authenticate('twitter'));
 
-// app.get('/auth/twitter/callback', 
+// app.get('/auth/twitter/callback',
 //   passport.authenticate('twitter', { failureRedirect: '/login' }),
 //   function(req, res) {
 //     // Successful authentication, redirect home.
