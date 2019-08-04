@@ -33,7 +33,7 @@ usersRouter.post('/signup', jsonBodyParser, (req, res, next) => {
 
   newUser.save((err, doc) => {
     if (err) {
-      res.status(401).json({ error: 'error' });
+      res.status(401).json({ error: err.errors });
     } else {
       res.status(201).json(doc);
     }
