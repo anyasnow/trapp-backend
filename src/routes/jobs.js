@@ -14,7 +14,7 @@ jobsRouter.get('/', requireAuth, (req, res, next) => {
 
 jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
   const { companyName, position, category } = req.body;
-  for (const field of ['companyName', 'position', 'category', 'user_id']) {
+  for (const field of ['companyName', 'position', 'category']) {
     if (!req.body[field]) {
       return res.status(400).json({
         error: `Missing ${field} of request body`
