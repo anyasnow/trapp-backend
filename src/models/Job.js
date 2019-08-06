@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const JobSchema = mongoose.Schema({
-  user_id: String,
+  user_id: { type: String, required: true },
   companyName: String,
   position: String,
   location: String,

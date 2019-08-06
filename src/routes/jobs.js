@@ -1,19 +1,19 @@
 const express = require('express');
+const requireAuth = require('../middleware/requireAuth')
 const Job = require('../models/Job');
 
 const jobsRouter = express.Router();
 const jsonBodyParser = express.json();
 
-jobsRouter.get('/', jsonBodyParser, (req, res, next) => {
-  const { user_id } = req.body;
-  console.log(user_id);
+jobsRouter.get('/', requireAuth, (req, res, next) => {
+  const user_id = req.user.id;
   Job.find({ user_id })
     .then(jobs => res.send(jobs))
     .catch(next);
 });
 
-jobsRouter.post('/newjob', jsonBodyParser, (req, res, next) => {
-  const { companyName, position, category, user_id } = req.body;
+jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
+  const { companyName, position, category } = req.body;
   for (const field of ['companyName', 'position', 'category', 'user_id']) {
     if (!req.body[field]) {
       return res.status(400).json({
@@ -23,7 +23,13 @@ jobsRouter.post('/newjob', jsonBodyParser, (req, res, next) => {
   }
 
   // Post Job to DB
-  const newJob = new Job({ companyName, position, category, user_id });
+  const newJob = new Job({ 
+    companyName, 
+    position, 
+    category, 
+    // grab user id from the request from requireAuth middleware
+    user_id: req.user.id 
+  });
 
   newJob.save((err, doc) => {
     if (err) {
@@ -36,7 +42,6 @@ jobsRouter.post('/newjob', jsonBodyParser, (req, res, next) => {
 
 jobsRouter.patch('/editjob', jsonBodyParser, (req, res, next) => {
   const edits = req.body;
-  console.log('EDITS: ', edits);
 
   if (!edits._id) {
     return res.status(400).json({ error: 'this job does not exist' });
@@ -52,7 +57,7 @@ jobsRouter.patch('/editjob', jsonBodyParser, (req, res, next) => {
   });
 });
 
-jobsRouter.delete('/:_id', (req, res, next) => {
+jobsRouter.delete('/:_id', requireAuth, (req, res, next) => {
   const { _id } = req.params;
 
   Job.findOneAndRemove({ _id }, (err, doc) => {

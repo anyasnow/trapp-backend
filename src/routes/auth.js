@@ -13,7 +13,7 @@ authRouter.post('/', jsonBodyParser, (req, res, next) => {
       return res.status(400).json({ error: 'Incorrect username or password' });
     } else {
       return res.status(200).json({
-        authToken: `Bearer ${doc.generateJWT()}`
+        authToken: `bearer ${doc.generateJWT()}`
       });
     }
   });

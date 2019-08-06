@@ -44,7 +44,7 @@ UserSchema.methods.generateJWT = function() {
     id: this._id,
     username: this.username,
     exp: parseInt(exp.getTime() /1000)
-  }, JWT_SECRET)
+  }, JWT_SECRET, { algorithm: 'HS256' })
 }
 
 UserSchema.methods.toAuthJSON = function() {
@@ -54,6 +54,10 @@ UserSchema.methods.toAuthJSON = function() {
     email: this.email,
     token: this.generateJWT(),
   }
+}
+
+UserSchema.methods.verifyJWT = function(token) {
+  return jwt.verify(token, config.JWT_SECRET, { algorithms: ['HS256'] })
 }
 
 let User = mongoose.model('User', UserSchema);

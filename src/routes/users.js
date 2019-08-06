@@ -6,7 +6,7 @@ const jsonBodyParser = express.json();
 
 usersRouter.get('/', (req, res, next) => {
   User.find({})
-    .then(users => res.send(users))
+    .then(users => res.status(200).send(users))
     .catch(next);
 });
 
