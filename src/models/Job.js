@@ -9,7 +9,7 @@ const JobSchema = mongoose.Schema({
   techStack: Array,
   created_at: { type: Date, required: true, default: Date.now },
   dateApplied: { type: Date, required: true, default: Date.now },
-  Notes: String,
+  notes: String,
   category: String
 });
 
