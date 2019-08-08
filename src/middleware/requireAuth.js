@@ -6,7 +6,7 @@ const requireAuth = (req, res, next) => {
     const authToken = req.get('Authorization') || ''
     let bearerToken
     if (!authToken.toLowerCase().startsWith('bearer ')) {
-        return res.status(400).json({ error: 'missing Bearer Token' })
+        return res.status(400).json({ error: 'missing bearer token' })
     } else {
         bearerToken = authToken.slice(7, authToken.length)
     }
