@@ -1,5 +1,5 @@
 const express = require('express');
-const requireAuth = require('../middleware/requireAuth')
+const requireAuth = require('../middleware/requireAuth');
 const Job = require('../models/Job');
 
 const jobsRouter = express.Router();
@@ -13,7 +13,15 @@ jobsRouter.get('/', requireAuth, (req, res, next) => {
 });
 
 jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
-  const { companyName, position, category, techStack, date_applied, notes, jobPosting } = req.body;
+  const {
+    companyName,
+    position,
+    category,
+    techStack,
+    date_applied,
+    notes,
+    jobPosting
+  } = req.body;
   for (const field of ['companyName', 'position', 'category']) {
     if (!req.body[field]) {
       return res.status(400).json({
@@ -22,18 +30,17 @@ jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
     }
   }
 
-
   // Post Job to DB
-  const newJob = new Job({ 
-    companyName, 
-    position, 
+  const newJob = new Job({
+    companyName,
+    position,
     category,
     techStack: techStack || [],
     date_applied: date_applied || new Date(),
     notes: notes || '',
     jobPosting: jobPosting || '',
     // grab user id from the request from requireAuth middleware
-    user_id: req.user.id 
+    user_id: req.user.id
   });
 
   newJob.save((err, doc) => {
@@ -48,12 +55,16 @@ jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
 jobsRouter.get('/:_id', requireAuth, (req, res, next) => {
   const { _id } = req.params;
 
-  Job.findOne({ _id })
-    .then(jobById => res.send(jobById))
-    .catch(err => res.send({ error: `${err} No job at that id`}))
-  })
+  Job.findOne({ _id }, (err, doc) => {
+    if (err) {
+      res.status(400).json({ error: 'no job at that id' });
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
 
-jobsRouter.patch('/:_id', jsonBodyParser, (req, res, next) => {
+jobsRouter.patch('/:_id', requireAuth, jsonBodyParser, (req, res, next) => {
   const edits = req.body;
 
   if (!req.params._id) {
@@ -69,18 +80,6 @@ jobsRouter.patch('/:_id', jsonBodyParser, (req, res, next) => {
     }
   });
 });
-
-jobsRouter.get('/:_id', requireAuth, (req, res, next) => {
-  const { _id } = req.params;
-
-  Job.findOne({ _id }, (err, doc) => {
-    if (err) {
-      res.status(400).json({ error: 'no job at that id'})
-    } else {
-      res.status(200).json(doc);
-    }
-  })
-})
 
 jobsRouter.delete('/:_id', requireAuth, (req, res, next) => {
   const { _id } = req.params;
