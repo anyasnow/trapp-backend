@@ -45,15 +45,23 @@ jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
   });
 });
 
-jobsRouter.patch('/editjob', jsonBodyParser, (req, res, next) => {
+jobsRouter.get('/:_id', requireAuth, (req, res, next) => {
+  const { _id } = req.params;
+
+  Job.findOne({ _id })
+    .then(jobById => res.send(jobById))
+    .catch(err => res.send({ error: `${err} No job at that id`}))
+  })
+
+jobsRouter.patch('/:_id', jsonBodyParser, (req, res, next) => {
   const edits = req.body;
 
-  if (!edits._id) {
+  if (!req.params._id) {
     return res.status(400).json({ error: 'this job does not exist' });
   }
 
   // find specific job (id), update it
-  Job.findOneAndUpdate({ _id: edits._id }, { ...edits }, (err, doc) => {
+  Job.findOneAndUpdate({ _id: req.params._id }, { ...edits }, (err, doc) => {
     if (err) {
       res.status(400).json({ error: 'error' });
     } else {
@@ -61,6 +69,18 @@ jobsRouter.patch('/editjob', jsonBodyParser, (req, res, next) => {
     }
   });
 });
+
+jobsRouter.get('/:_id', requireAuth, (req, res, next) => {
+  const { _id } = req.params;
+
+  Job.findOne({ _id }, (err, doc) => {
+    if (err) {
+      res.status(400).json({ error: 'no job at that id'})
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+})
 
 jobsRouter.delete('/:_id', requireAuth, (req, res, next) => {
   const { _id } = req.params;
