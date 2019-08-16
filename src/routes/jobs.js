@@ -20,7 +20,8 @@ jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
     techStack,
     date_applied,
     notes,
-    jobPosting
+    jobPosting,
+    logo
   } = req.body;
   for (const field of ['companyName', 'position', 'category']) {
     if (!req.body[field]) {
@@ -39,6 +40,7 @@ jobsRouter.post('/newjob', requireAuth, jsonBodyParser, (req, res, next) => {
     date_applied: date_applied || new Date(),
     notes: notes || '',
     jobPosting: jobPosting || '',
+    logo: logo || '',
     // grab user id from the request from requireAuth middleware
     user_id: req.user.id
   });
