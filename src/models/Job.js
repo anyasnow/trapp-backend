@@ -10,7 +10,8 @@ const JobSchema = mongoose.Schema({
   created_at: { type: Date, required: true, default: Date.now },
   dateApplied: { type: Date, required: true, default: Date.now },
   notes: String,
-  category: String
+  category: String,
+  logo: String
 });
 
 let Job = mongoose.model('Job', JobSchema);
