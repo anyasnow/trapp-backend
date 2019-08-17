@@ -1,26 +1,44 @@
-# Express Boilerplate!
+# TrApp #
 
-Feel free to use this boilerplate for starting new projects :)
+TrApp tracks your applications to developer jobs, allowing you to focus on the job search.
 
-## Set up
+### Live Demo:  https://trapp-frontend.jonespi.now.sh
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+### Repository: https://github.com/cohencodes/trapp-backend
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+![Add Job Demo](https://github.com/cohencodes/trapp-frontend/blob/master/src/assets/landing.gif?raw=true)
 
-## Scripts
+![Dashboard Screenshot](https://github.com/cohencodes/trapp-frontend/blob/master/src/assets/trapp.png?raw=true)
+  
+## Tech Stack
 
-Start the application `npm start`
+* Frontend
+  * [React](https://github.com/facebook/react)
+  * [React Hooks](https://github.com/streamich/react-use)
+  * [Context API](https://github.com/wesbos/React-Context)
+  * [Vanilla CSS](https://vanillaframework.io/)
+  * [FontAwesome Library](https://fontawesome.com/)
+  * [Axios](https://github.com/axios/axios)
 
-Start nodemon for the application `npm run dev`
+* Backend
+  * [Node](https://github.com/nodejs/node)
+  * [Express](https://github.com/expressjs/express)
+  * [MongoDB](https://github.com/mongodb/mongo)
+  * [Mongoose](https://github.com/Automattic/mongoose)
+  * [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+  * [Authentication: JSONWebTokens](https://jwt.io/)
+  * [Heroku](https://devcenter.heroku.com)
+  * [YouTube API](https://developers.google.com/youtube/v3/)
+  * [Clearbit API](https://clearbit.com/docs)
 
-Run the tests `npm test`
+[Server repo](https://github.com/cohencodes/trapp-frontend) 
 
-## Deploying
+## API
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+
+## Team
+* Project Manager [@cohencodes](https://github.com/cohencodes)
+* QA Lead [@jonespi](https://github.com/jonespi)
+* Design Lead [@anyasnow](https://github.com/anyasnow)
+
+
